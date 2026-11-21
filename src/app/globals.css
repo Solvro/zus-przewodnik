@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens „ZUS, tylko ludzki”.
+ * Bazują na identyfikacji zus.pl (zieleń #007834, granat #00416E, Lato),
+ * uzupełnione o skalę jasności, semantykę i tryb wysokiego kontrastu (WCAG 2.1 AA).
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --c-primary: #007834; /* 5,6:1 na białym */
+  --c-primary-strong: #025a28;
+  --c-primary-50: #e8f3ec;
+  --c-primary-100: #cde6d6;
+  --c-primary-200: #9fceb1;
+  --c-navy: #00416e;
+  --c-navy-50: #e6eef5;
+  --c-ink: #283754;
+  --c-muted: #5b6475; /* 5,9:1 */
+  --c-line: #dfe3e8;
+  --c-surface: #ffffff;
+  --c-canvas: #f6f8f7;
+  --c-accent: #fab856; /* tylko jako tło z ciemnym tekstem */
+  --c-accent-50: #fff4e2;
+  --c-danger: #cd0000;
+  --c-danger-50: #fdecec;
+  --c-warning: #b45309;
+  --c-warning-50: #fff6e5;
+  --c-info: #00416e;
+  --c-info-50: #e6eef5;
+  --c-focus: #fab856;
+
+  /* stawki zasiłku na osi czasu */
+  --c-rate-100: #007834;
+  --c-rate-815: #8cc5a1; /* tekst ink 6:1 */
+  --c-rate-70: #d9eedf; /* tekst ink, obrys primary */
+  --c-rate-sick: #00416e;
+  --c-rate-work: #9fceb1;
+
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow-card: 0 1px 2px rgb(40 55 84 / 0.06), 0 2px 8px rgb(40 55 84 / 0.06);
+  --font-scale: 1;
+}
+
+html[data-contrast="high"] {
+  --c-primary: #005a24;
+  --c-primary-strong: #000000;
+  --c-primary-50: #ffffff;
+  --c-primary-100: #ffff00;
+  --c-primary-200: #000000;
+  --c-navy: #000000;
+  --c-navy-50: #ffffff;
+  --c-ink: #000000;
+  --c-muted: #000000;
+  --c-line: #000000;
+  --c-canvas: #ffffff;
+  --c-accent-50: #ffff00;
+  --c-focus: #000000;
+  --shadow-card: none;
+}
+
+html[data-font="lg"] {
+  --font-scale: 1.125;
+}
+html[data-font="xl"] {
+  --font-scale: 1.25;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--c-primary);
+  --color-primary-strong: var(--c-primary-strong);
+  --color-primary-50: var(--c-primary-50);
+  --color-primary-100: var(--c-primary-100);
+  --color-primary-200: var(--c-primary-200);
+  --color-navy: var(--c-navy);
+  --color-navy-50: var(--c-navy-50);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-surface: var(--c-surface);
+  --color-canvas: var(--c-canvas);
+  --color-accent: var(--c-accent);
+  --color-accent-50: var(--c-accent-50);
+  --color-danger: var(--c-danger);
+  --color-danger-50: var(--c-danger-50);
+  --color-warning: var(--c-warning);
+  --color-warning-50: var(--c-warning-50);
+  --color-info: var(--c-info);
+  --color-info-50: var(--c-info-50);
+  --color-rate-100: var(--c-rate-100);
+  --color-rate-815: var(--c-rate-815);
+  --color-rate-70: var(--c-rate-70);
+  --color-rate-sick: var(--c-rate-sick);
+  --color-rate-work: var(--c-rate-work);
+  --radius-ui: var(--radius);
+  --radius-card: var(--radius-lg);
+  --shadow-card: var(--shadow-card);
+  --font-sans: var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-size: calc(100% * var(--font-scale));
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-family: var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tailwind v4 nie daje kursora „pointer” przyciskom — przywracamy (cursor-pointer) i usuwamy opóźnienie dotyku (tap-delay). */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+summary,
+label[for],
+select {
+  cursor: pointer;
+}
+a,
+button,
+input,
+select,
+summary,
+label {
+  touch-action: manipulation;
+}
+
+/* Krótkie nagłówki łamią się równo (heading-line-balance). */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Warstwy z-index (z-index-management): 10 treść, 40 nawigacja, 50 nakładki. */
+
+/* Widoczny fokus dla klawiatury — zawsze. */
+:focus-visible {
+  outline: 3px solid var(--c-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+html[data-contrast="high"] :focus-visible {
+  outline-color: #000;
+  box-shadow: 0 0 0 6px #ffff00;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.prose-zus {
+  max-width: 68ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
