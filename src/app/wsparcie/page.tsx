@@ -1,3 +1,4 @@
+import { FeatureGate } from "@/components/layout/feature-gate";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, ExternalLink } from "lucide-react";
@@ -10,6 +11,7 @@ const TOPICS = Object.keys(SUPPORT_TOPICS) as SupportTopic[];
 
 export default function WsparciePage() {
   return (
+    <FeatureGate feature="support">
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="text-3xl font-black text-navy">Wsparcie</h1>
       <p className="prose-zus mt-2 text-muted">
@@ -49,5 +51,8 @@ export default function WsparciePage() {
         </ul>
       </section>
     </div>
+    </FeatureGate>
   );
 }
+
+export const dynamic = "force-dynamic";

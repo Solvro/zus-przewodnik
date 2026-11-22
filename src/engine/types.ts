@@ -118,6 +118,18 @@ export const Scenario = z.object({
       /** Rodzice korzystają z rodzicielskiego jednocześnie (od tego samego dnia). */
       parentalConcurrent: z.boolean().default(false),
       paternity: z.boolean().default(true),
+      /**
+       * Sytuacja szczególna matki — ojciec przejmuje urlop macierzyński wcześniej niż po 14 tygodniach
+       * (KP art. 180 § 6–7 niezdolność do samodzielnej egzystencji, § 10–11 szpital, § 12 zgon, § 13 porzucenie,
+       * § 15 — gdy matka nie była ubezpieczona). afterWeeks = tydzień po porodzie, w którym nastąpiło zdarzenie.
+       */
+      motherUnable: z
+        .object({
+          reason: z.enum(["incapacity", "hospital", "death", "abandonment"]),
+          afterWeeks: z.number().int().min(0).max(37),
+          hospitalWeeks: z.number().int().min(1).max(37).optional(),
+        })
+        .optional(),
       paternityStart: isoDate.optional(),
       supplementaryBy: z.enum(["mother", "father"]).default("mother"),
       partTime: z

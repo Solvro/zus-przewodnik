@@ -189,7 +189,7 @@ function Stat({ label, value, hint, strong }: { label: string; value: string; hi
   return (
     <div className={cn("rounded-ui border p-3", strong ? "border-primary bg-primary-50" : "border-line bg-surface")}>
       <dt className="text-xs font-bold text-muted">{label}</dt>
-      <dd className={cn("mt-0.5 font-black tabular text-navy", strong ? "text-2xl" : "text-xl")}>{value}</dd>
+      <dd className={cn("font-display mt-0.5 tabular text-navy", strong ? "text-2xl" : "text-xl")}>{value}</dd>
       {hint && <dd className="text-xs text-muted">{hint}</dd>}
     </div>
   );

@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
       "@tanstack/react-query",
     ],
   },
+  // Osobny katalog dla `next dev` — `next build` nie nadpisuje plików działającego serwera deweloperskiego
+  distDir: process.env.NEXT_DIST_DIR ?? ".next",
+  output: "standalone",
   poweredByHeader: false,
   devIndicators: false,
 };

@@ -1,5 +1,6 @@
 import { addDays, addMonths, addYears, ageInYears, diffDays, endOf, endOfYear, fmt, maxDate, spanDays, yearOf } from "./dates";
 import type { LegalParams } from "./params";
+import { coverageOn } from "./insurance";
 import type { BenefitKind, LegalRef, Parent, ScenarioParsed, TraceStep } from "./types";
 
 /** Segment bez kwot — kwoty dolicza moduł `payments`. */
@@ -328,30 +329,100 @@ export function buildTimeline(s: ScenarioParsed, ctx: TimelineContext, p: LegalP
           legal: [KP("art. 180 § 2"), { act: "Poradnik ZUS 2026", ref: "s. 28 — 100% przed porodem" }],
         });
       }
-      segments.push({
-        id: sid("maternity"),
-        parent: "mother",
-        kind: "maternity",
-        label: "Urlop macierzyński",
-        start: birth,
-        days: motherAfter * 7,
-        rate: plan.averaged ? p.rates.averaged : p.rates.maternity,
-        workFraction: 0,
-        legal: [KP("art. 180 § 1"), UZ("art. 29 ust. 1, art. 31 ust. 1 i 3")],
-      });
-      if (motherAfter < afterBirthTotal) {
+      const matRate = plan.averaged ? p.rates.averaged : p.rates.maternity;
+      const mu = plan.motherUnable;
+      const pushMother = (fromWeek: number, weeks: number) =>
+        weeks > 0 &&
+        segments.push({
+          id: sid("maternity"),
+          parent: "mother",
+          kind: "maternity",
+          label: fromWeek === 0 ? "Urlop macierzyński" : "Urlop macierzyński (dalsza część)",
+          start: addDays(birth, fromWeek * 7),
+          days: weeks * 7,
+          rate: matRate,
+          workFraction: 0,
+          legal: [KP("art. 180 § 1"), UZ("art. 29 ust. 1, art. 31 ust. 1 i 3")],
+        });
+      const pushFather = (fromWeek: number, weeks: number, label: string, legal: LegalRef[]) =>
+        weeks > 0 &&
         segments.push({
           id: sid("maternity"),
           parent: "father",
           kind: "maternity_transfer",
-          label: "Część urlopu macierzyńskiego przejęta od matki",
-          start: addDays(birth, motherAfter * 7),
-          days: (afterBirthTotal - motherAfter) * 7,
-          rate: plan.averaged ? p.rates.averaged : p.rates.maternity,
+          label,
+          start: addDays(birth, fromWeek * 7),
+          days: weeks * 7,
+          rate: matRate,
           workFraction: 0,
-          legal: [KP("art. 180 § 4"), UZ("art. 29 ust. 3")],
+          legal,
         });
+
+      if (mu && ctx.fatherCovered) {
+        /* Sytuacja szczególna: przejęcie przed upływem 14 tygodni */
+        const minWeeks = mu.reason === "death" ? 0 : p.motherMinWeeksForSpecialTransfer;
+        let at = Math.min(mu.afterWeeks, afterBirthTotal);
+        if (at < minWeeks) {
+          validation.push(
+            `W tej sytuacji ojciec może przejąć urlop po wykorzystaniu przez matkę co najmniej ${minWeeks} tygodni po porodzie — przyjęto ${minWeeks}.`,
+          );
+          at = Math.min(minWeeks, afterBirthTotal);
+        }
+        const REF: Record<typeof mu.reason, { label: string; legal: LegalRef[] }> = {
+          incapacity: { label: "Urlop macierzyński przejęty przez ojca (niezdolność matki do samodzielnej egzystencji)", legal: [KP("art. 180 § 6–7"), UZ("art. 29 ust. 5")] },
+          hospital: { label: "Urlop macierzyński ojca na czas pobytu matki w szpitalu", legal: [KP("art. 180 § 10–11"), UZ("art. 29 ust. 6")] },
+          death: { label: "Urlop macierzyński po śmierci matki dziecka", legal: [KP("art. 180 § 12"), UZ("art. 29 ust. 7")] },
+          abandonment: { label: "Urlop macierzyński po porzuceniu dziecka przez matkę", legal: [KP("art. 180 § 13"), UZ("art. 29 ust. 7")] },
+        };
+        pushMother(0, at);
+        if (mu.reason === "hospital") {
+          const hw = Math.min(mu.hospitalWeeks ?? 1, afterBirthTotal - at);
+          pushFather(at, hw, REF.hospital.label, REF.hospital.legal);
+          pushMother(at + hw, afterBirthTotal - at - hw);
+        } else {
+          pushFather(at, afterBirthTotal - at, REF[mu.reason].label, REF[mu.reason].legal);
+        }
+        trace.push({
+          id: "maternity.specialTransfer",
+          label: "Przejęcie urlopu macierzyńskiego przez ojca (sytuacja szczególna)",
+          value: `od ${at}. tygodnia po porodzie`,
+          formula: mu.reason === "death" ? "Bez minimalnego okresu wykorzystanego przez matkę" : `Matka wykorzystała co najmniej ${minWeeks} tyg.`,
+          legal: REF[mu.reason].legal,
+          source: "reguła",
+        });
+      } else {
+        if (mu && !ctx.fatherCovered) {
+          validation.push("Ojciec nie podlega ubezpieczeniu chorobowemu — nie może przejąć urlopu macierzyńskiego.");
+        }
+        pushMother(0, motherAfter);
+        if (motherAfter < afterBirthTotal) {
+          pushFather(motherAfter, afterBirthTotal - motherAfter, "Część urlopu macierzyńskiego przejęta od matki", [
+            KP("art. 180 § 4"),
+            UZ("art. 29 ust. 3"),
+          ]);
+        }
       }
+    } else if (ctx.fatherCovered && plan.motherUnable && plan.motherUnable.reason !== "hospital") {
+      /* KP art. 180 § 15: matka nieubezpieczona zmarła, porzuciła dziecko albo jest niezdolna do samodzielnej egzystencji */
+      const at = Math.min(plan.motherUnable.afterWeeks, W);
+      segments.push({
+        id: sid("maternity"),
+        parent: "father",
+        kind: "maternity_transfer",
+        label: "Urlop macierzyński ojca (matka nieubezpieczona)",
+        start: addDays(birth, at * 7),
+        days: (W - at) * 7,
+        rate: plan.averaged ? p.rates.averaged : p.rates.maternity,
+        workFraction: 0,
+        legal: [KP("art. 180 § 15"), UZ("art. 29 ust. 9")],
+      });
+      trace.push({
+        id: "maternity.motherNotInsuredTransfer",
+        label: "Matka nieubezpieczona — urlop macierzyński dla ojca",
+        value: `${W - at} tyg. od ${at}. tygodnia po porodzie`,
+        legal: [KP("art. 180 § 15")],
+        source: "reguła",
+      });
     } else if (ctx.fatherCovered) {
       trace.push({
         id: "maternity.motherNotInsured",
@@ -523,8 +594,25 @@ export function buildTimeline(s: ScenarioParsed, ctx: TimelineContext, p: LegalP
       isAdoption && s.childBirthDate
         ? minIso(deadline, addDays(addYears(s.childBirthDate, p.adoptionChildAgeLimit), -1))
         : deadline;
-    if (ctx.fatherCovered) {
-      const start = plan.paternityStart ?? eventDate;
+    let fatherOk = ctx.fatherCovered;
+    let start = plan.paternityStart ?? eventDate;
+    // Ojciec, który zaczął pracę / ubezpieczenie dopiero po urodzeniu dziecka, też ma prawo do ojcowskiego
+    // (do 12. miesiąca życia dziecka) — liczymy od dnia objęcia ubezpieczeniem.
+    if (!fatherOk && s.father.insuranceStart && s.father.insuranceStart > eventDate) {
+      start = maxDate(start, s.father.insuranceStart);
+      fatherOk = coverageOn(s.father, start, { isMother: false, isBirth: !isAdoption, dueDate: s.dueDate }, p).covered;
+      if (fatherOk) {
+        trace.push({
+          id: "paternity.lateStart",
+          label: "Urlop ojcowski po podjęciu pracy",
+          value: `od ${fmt(start)}`,
+          formula: "Tata objęty ubezpieczeniem chorobowym po urodzeniu dziecka — ojcowski przysługuje, jeśli dziecko nie ukończyło 12 miesięcy",
+          legal: [KP("art. 182³ § 1"), UZ("art. 29a ust. 1")],
+          source: "reguła",
+        });
+      }
+    }
+    if (fatherOk) {
       if (start > result.paternityDeadline) {
         validation.push(`Urlop ojcowski trzeba wykorzystać do ${fmt(result.paternityDeadline)}.`);
       } else {

@@ -3,8 +3,10 @@
 import { keepPreviousData, useMutation, useQueries, useQuery } from "@tanstack/react-query";
 import type { Persona, PersonaZusData } from "@/mocks/personas";
 import type { SessionUser } from "@/lib/session";
+import type { ExtractedCase } from "@/ai/case-mapping";
 import type { CalculationResult, LegalParams, Scenario } from "@/engine";
 import { api } from "./client";
+import { DEFAULT_FEATURES, type FeatureFlags } from "@/content/features";
 
 /** Klucze zapytań w jednym miejscu — łatwa inwalidacja (np. po zmianie parametrów w adminie). */
 export const qk = {
@@ -140,4 +142,64 @@ export function useSubmitMutation() {
     mutationFn: (v: { formCode: string; to: "employer" | "zus" | "payer"; payload: Record<string, unknown> }) =>
       api<{ id: string; status: string; receivedAt: string; upo: string; message: string }>("/api/v1/mock/submit", { json: v }),
   });
+}
+
+/* ───────────── AI: sprawy, odczyt dokumentów, prosty język ───────────── */
+
+export interface CaseListItem {
+  id: string;
+  title: string;
+  description: string;
+  source: "sample" | "zus";
+  needsAi: boolean;
+}
+
+export interface CaseRunResult {
+  extracted: ExtractedCase;
+  scenario: Scenario;
+  assumptions: string[];
+  result: CalculationResult | null;
+  expected?: { outcome: string; monthlyAmount: number | null; reason?: string | null } | null;
+  ai: boolean;
+}
+
+export function useCasesQuery() {
+  return useQuery({
+    queryKey: ["cases"] as const,
+    queryFn: () => api<{ aiAvailable: boolean; cases: CaseListItem[] }>("/api/v1/cases"),
+    staleTime: 60_000,
+  });
+}
+
+export function useRunCaseMutation() {
+  return useMutation({ mutationFn: (id: string) => api<CaseRunResult>(`/api/v1/cases/${encodeURIComponent(id)}`, { method: "POST" }) });
+}
+
+export function useExtractMutation() {
+  return useMutation({
+    mutationFn: (files: File[]) => {
+      const fd = new FormData();
+      for (const f of files) fd.append("files", f);
+      return api<CaseRunResult>("/api/v1/documents/extract", { method: "POST", body: fd });
+    },
+  });
+}
+
+export function usePlainLanguageMutation() {
+  return useMutation({
+    mutationFn: (text: string) => api<{ text: string; ai: boolean }>("/api/v1/plain-language", { json: { text } }),
+  });
+}
+
+/* ───────── Moduły (feature flags z panelu admina) ───────── */
+export const featureKeys = { all: ["features"] as const };
+
+export function useFeatures() {
+  const q = useQuery({
+    queryKey: featureKeys.all,
+    queryFn: () => api<FeatureFlags>("/api/v1/features"),
+    staleTime: 30_000,
+  });
+  // Do czasu odpowiedzi wszystko włączone — bez migania nawigacji
+  return q.data ?? DEFAULT_FEATURES;
 }

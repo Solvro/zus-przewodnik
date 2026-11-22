@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +40,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Materiały ZUS (nie rozpowszechniać) i korpus asystenta
+/private-cases/
+/data/corpus/*.txt
+.shot.tmp.mjs
+.flow.tmp.mjs
+/data/param-sets.json
+/data/audit-log.json
+/data/features.json
+/test-results/
+/playwright-report/
+/.next-dev/
+
+# Prezentacja i film: pliki robocze (warianty slajdów, brief z materiałami zewnętrznymi, wygenerowane audio/wideo — film jest na YouTube)
+/prezentacja/work/
+/prezentacja/brief/
+/prezentacja/film/audio/
+/prezentacja/film/*.mp4
+/prezentacja/slides/*.pdf

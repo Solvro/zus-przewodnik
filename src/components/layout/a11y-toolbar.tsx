@@ -68,7 +68,7 @@ export function A11yToolbar({ compact = false }: { compact?: boolean }) {
         <button
           type="button"
           onClick={() => chooseFont(next[font])}
-          aria-label={`Rozmiar tekstu: ${FONT_LABELS[font].toLowerCase()}. Zmień na: ${FONT_LABELS[next[font]].toLowerCase()}`}
+          aria-label={`${FONT_TEXT[font]} — rozmiar tekstu: ${FONT_LABELS[font].toLowerCase()}, zmień na: ${FONT_LABELS[next[font]].toLowerCase()}`}
           className={cn(
             "inline-flex size-11 items-center justify-center rounded-ui font-black text-navy hover:bg-navy-50",
             font !== "md" && "bg-navy-50 ring-2 ring-navy/30",
@@ -83,7 +83,8 @@ export function A11yToolbar({ compact = false }: { compact?: boolean }) {
             type="button"
             onClick={() => chooseFont(f)}
             aria-pressed={font === f}
-            aria-label={FONT_LABELS[f]}
+            // WCAG 2.5.3: nazwa dostępna zaczyna się od widocznego tekstu („A+”)
+            aria-label={`${FONT_TEXT[f]} — ${FONT_LABELS[f].toLowerCase()}`}
             title={FONT_LABELS[f]}
             className={cn(
               "inline-flex size-11 items-center justify-center rounded-ui font-black text-navy hover:bg-navy-50",

@@ -6,7 +6,7 @@ import { ArrowRight, Building2, CalendarClock, CheckCircle2, CircleSlash, FileTe
 import { rehydrateScenario, useScenario, useScenarioHydrated, useScenarioSource, useScenarioTouched } from "@/lib/scenario-store";
 import { rehydrateSession, useSession } from "@/lib/session";
 import { useCalculation } from "@/lib/use-calculation";
-import { useInsuredQuery } from "@/lib/api/queries";
+import { useFeatures, useInsuredQuery } from "@/lib/api/queries";
 import { dateLong, dateShort } from "@/lib/utils";
 import { Badge, ButtonLink, Callout, Card, CardHeader } from "@/components/ui/primitives";
 import { Timeline } from "@/components/results/timeline";
@@ -14,8 +14,10 @@ import { MonthlyChart } from "@/components/results/monthly-chart";
 import { DocumentList, RiskList, SummaryStats } from "@/components/results/result-blocks";
 import { parentLabels } from "@/components/results/results-panel";
 import { SupportOrgs } from "@/components/support/support-orgs";
+import { PlainLanguageCard } from "@/components/plan/plain-language-card";
 
 export function PlanView() {
+  const features = useFeatures();
   useEffect(() => {
     rehydrateScenario();
     rehydrateSession();
@@ -167,6 +169,8 @@ export function PlanView() {
                 <div className="px-5 pb-5"><RiskList risks={importantRisks} /></div>
               </Card>
             )}
+
+            {features.plainLanguage && <PlainLanguageCard result={r} labels={labels} />}
 
             <Card className="p-5">
               <p className="flex items-center gap-2 font-bold text-navy"><MessageCircleQuestion aria-hidden className="size-5 text-primary" /> Masz pytanie?</p>

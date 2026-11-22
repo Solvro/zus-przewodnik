@@ -1,3 +1,4 @@
+import { FeatureGate } from "@/components/layout/feature-gate";
 import type { Metadata } from "next";
 import { Accordion } from "@/components/ui/accordion";
 import { ButtonLink } from "@/components/ui/primitives";
@@ -79,6 +80,7 @@ const ITEMS = [
 
 export default function TrudnaSytuacjaPage() {
   return (
+    <FeatureGate feature="support">
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-3xl font-black text-navy">Trudna sytuacja</h1>
       <p className="prose-zus mt-2 text-lg text-muted">
@@ -99,5 +101,8 @@ export default function TrudnaSytuacjaPage() {
         <ButtonLink href="/asystent" variant="secondary">Zadaj pytanie</ButtonLink>
       </div>
     </div>
+    </FeatureGate>
   );
 }
+
+export const dynamic = "force-dynamic";

@@ -486,3 +486,59 @@ describe("ryzyka i dokumenty", () => {
     expect(r.payer.mother?.who).toBe("zus");
   });
 });
+
+describe("przejęcie urlopu macierzyńskiego przez ojca w sytuacjach szczególnych (KP art. 180 § 6–15)", () => {
+  const seg = (s: Scenario) => calculate(s).segments.filter((x) => x.kind === "maternity" || x.kind === "maternity_transfer");
+  const withFather = (motherUnable: NonNullable<Scenario["plan"]>["motherUnable"]): Scenario =>
+    birth({ father: employee(9000), plan: { motherUnable } as Scenario["plan"] });
+
+  it("niezdolność do samodzielnej egzystencji: przejęcie po 8 tygodniach (wcześniej niż 14)", () => {
+    const s = seg(withFather({ reason: "incapacity", afterWeeks: 8 }));
+    expect(s.find((x) => x.parent === "mother")!.days).toBe(56);
+    expect(s.find((x) => x.parent === "father")!.days).toBe(12 * 7);
+  });
+
+  it("przed upływem 8 tygodni — przyjmuje minimum 8 i ostrzega", () => {
+    const r = calculate(withFather({ reason: "abandonment", afterWeeks: 3 }));
+    expect(r.segments.find((x) => x.kind === "maternity")!.days).toBe(56);
+    expect(r.validation.join(" ")).toMatch(/co najmniej 8 tygodni/);
+  });
+
+  it("zgon matki: bez minimalnego okresu — ojciec od dnia zdarzenia", () => {
+    const s = seg(withFather({ reason: "death", afterWeeks: 2 }));
+    expect(s.find((x) => x.parent === "mother")!.days).toBe(14);
+    expect(s.find((x) => x.parent === "father")!.days).toBe(18 * 7);
+  });
+
+  it("szpital: ojciec na czas pobytu, potem matka kontynuuje", () => {
+    const s = seg(withFather({ reason: "hospital", afterWeeks: 9, hospitalWeeks: 3 }));
+    expect(s.map((x) => [x.parent, x.days / 7])).toEqual([
+      ["mother", 9],
+      ["father", 3],
+      ["mother", 8],
+    ]);
+  });
+
+  it("matka nieubezpieczona zmarła — ojciec dostaje pozostałą część urlopu macierzyńskiego (§ 15)", () => {
+    const s = seg({
+      ...withFather({ reason: "death", afterWeeks: 4 }),
+      mother: { title: "none" },
+    });
+    expect(s).toHaveLength(1);
+    expect(s[0].parent).toBe("father");
+    expect(s[0].days).toBe(16 * 7);
+  });
+});
+
+describe("urlop ojcowski — tata zaczął pracę po urodzeniu dziecka", () => {
+  it("ojcowski od dnia objęcia ubezpieczeniem, jeśli dziecko nie ma 12 miesięcy", () => {
+    const r = calculate(birth({ father: employee(9000, { insuranceStart: "2027-03-01" }) }));
+    const pat = r.segments.find((x) => x.kind === "paternity");
+    expect(pat?.start).toBe("2027-03-01");
+    expect(pat?.days).toBe(14);
+  });
+  it("praca podjęta po 12. miesiącu życia dziecka — prawo wygasło", () => {
+    const r = calculate(birth({ father: employee(9000, { insuranceStart: "2028-01-10" }) }));
+    expect(r.segments.find((x) => x.kind === "paternity")).toBeUndefined();
+  });
+});

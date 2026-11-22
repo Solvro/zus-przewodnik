@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /*
- * Design tokens „ZUS, tylko ludzki”.
- * Bazują na identyfikacji zus.pl (zieleń #007834, granat #00416E, Lato),
- * uzupełnione o skalę jasności, semantykę i tryb wysokiego kontrastu (WCAG 2.1 AA).
+ * Design tokens Rodzicownika — „notatnik rodzica”.
+ * Zieleń #007834 i bursztyn #FAB856 z identyfikacji ZUS, Lato do tekstu;
+ * do tego ciepły papier, głęboka zieleń nagłówków i szeryfowy krój Fraunces (nagłówki, kwoty).
+ * Kontrasty sprawdzone dla WCAG 2.1 AA; tryb wysokiego kontrastu niżej.
  */
 :root {
   --c-primary: #007834; /* 5,6:1 na białym */
@@ -11,15 +12,17 @@
   --c-primary-50: #e8f3ec;
   --c-primary-100: #cde6d6;
   --c-primary-200: #9fceb1;
-  --c-navy: #00416e;
-  --c-navy-50: #e6eef5;
-  --c-ink: #283754;
-  --c-muted: #5b6475; /* 5,9:1 */
-  --c-line: #dfe3e8;
+  --c-navy: #12352a; /* nagłówki: głęboka zieleń (nazwa tokenu historyczna) */
+  --c-navy-50: #e8efe9;
+  --c-ink: #1e2a33;
+  --c-muted: #5a616c; /* 5,7:1 na papierze */
+  --c-line: #e6ddcd;
   --c-surface: #ffffff;
-  --c-canvas: #f6f8f7;
+  --c-canvas: #fbf7f0; /* papier */
+  --c-paper: #fbf7f0;
+  --c-paper-deep: #f3ecdf;
   --c-accent: #fab856; /* tylko jako tło z ciemnym tekstem */
-  --c-accent-50: #fff4e2;
+  --c-accent-50: #fdf0d8;
   --c-danger: #cd0000;
   --c-danger-50: #fdecec;
   --c-warning: #b45309;
@@ -35,9 +38,9 @@
   --c-rate-sick: #00416e;
   --c-rate-work: #9fceb1;
 
-  --radius: 8px;
-  --radius-lg: 12px;
-  --shadow-card: 0 1px 2px rgb(40 55 84 / 0.06), 0 2px 8px rgb(40 55 84 / 0.06);
+  --radius: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 0 rgb(18 53 42 / 0.04), 0 10px 30px -18px rgb(18 53 42 / 0.25);
   --font-scale: 1;
 }
 
@@ -53,6 +56,9 @@ html[data-contrast="high"] {
   --c-muted: #000000;
   --c-line: #000000;
   --c-canvas: #ffffff;
+  --c-paper: #ffffff;
+  --c-paper-deep: #ffffff;
+  --c-accent: #ffff00;
   --c-accent-50: #ffff00;
   --c-focus: #000000;
   --shadow-card: none;
@@ -78,6 +84,8 @@ html[data-font="xl"] {
   --color-line: var(--c-line);
   --color-surface: var(--c-surface);
   --color-canvas: var(--c-canvas);
+  --color-paper: var(--c-paper);
+  --color-paper-deep: var(--c-paper-deep);
   --color-accent: var(--c-accent);
   --color-accent-50: var(--c-accent-50);
   --color-danger: var(--c-danger);
@@ -95,6 +103,7 @@ html[data-font="xl"] {
   --radius-card: var(--radius-lg);
   --shadow-card: var(--shadow-card);
   --font-sans: var(--font-lato), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
 }
 
 html {
@@ -134,6 +143,40 @@ h3 {
   text-wrap: balance;
 }
 
+/*
+ * Nagłówki stron i sekcji — szeryfowy Fraunces (poza warstwą utilities celowo:
+ * ujednolica grubość niezależnie od klas font-black/font-bold w komponentach).
+ */
+h1,
+h2,
+.font-display {
+  font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -0.012em;
+}
+
+/* Zakreślacz — podkreślenie kluczowego słowa jak w notatniku. */
+.hl {
+  background: linear-gradient(transparent 60%, var(--c-accent) 60%, var(--c-accent) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.08em;
+}
+
+/* Delikatna kratka papieru — tło sekcji „notatnikowych”. */
+.paper-grid {
+  background-color: var(--c-paper);
+  background-image:
+    linear-gradient(var(--c-paper-deep) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-paper-deep) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}
+html[data-contrast="high"] .paper-grid {
+  background-image: none;
+}
+
 /* Warstwy z-index (z-index-management): 10 treść, 40 nawigacja, 50 nakładki. */
 
 /* Widoczny fokus dla klawiatury — zawsze. */
@@ -162,5 +205,23 @@ html[data-contrast="high"] :focus-visible {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Druk / zapis do PDF: tylko podgląd dokumentu */
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .print-area {
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
 }

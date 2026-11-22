@@ -8,18 +8,18 @@ type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "link";
 type ButtonSize = "sm" | "md" | "lg";
 
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 font-bold rounded-ui transition-colors disabled:opacity-50 disabled:pointer-events-none select-none";
+  "inline-flex items-center justify-center gap-2 font-bold rounded-full transition-[background-color,color,box-shadow,transform] duration-150 active:translate-y-px disabled:opacity-50 disabled:pointer-events-none select-none";
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: "bg-primary text-white hover:bg-primary-strong",
+  primary: "bg-primary text-white shadow-[inset_0_-2px_0_rgb(0_0_0/0.18)] hover:bg-primary-strong",
   secondary: "bg-surface text-primary border-2 border-primary hover:bg-primary-50",
-  ghost: "text-ink hover:bg-primary-50",
+  ghost: "text-ink hover:bg-paper-deep",
   danger: "bg-danger text-white hover:opacity-90",
   link: "text-primary underline underline-offset-4 hover:text-primary-strong px-0",
 };
 const buttonSizes: Record<ButtonSize, string> = {
-  sm: "min-h-9 px-3 text-sm",
-  md: "min-h-11 px-4 text-base",
-  lg: "min-h-13 px-6 text-lg",
+  sm: "min-h-9 px-3.5 text-sm",
+  md: "min-h-11 px-5 text-base",
+  lg: "min-h-13 px-7 text-lg",
 };
 
 export function buttonClass(variant: ButtonVariant = "primary", size: ButtonSize = "md", className?: string) {
@@ -94,7 +94,7 @@ const tones: Record<Tone, string> = {
 export function Badge({ tone = "neutral", className, ...props }: React.HTMLAttributes<HTMLSpanElement> & { tone?: Tone }) {
   return (
     <span
-      className={cn("inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-bold whitespace-nowrap", tones[tone], className)}
+      className={cn("inline-flex max-w-full items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-bold [overflow-wrap:anywhere]", tones[tone], className)}
       {...props}
     />
   );

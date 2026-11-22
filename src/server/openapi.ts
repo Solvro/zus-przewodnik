@@ -17,7 +17,7 @@ export function buildOpenApi() {
   return {
     openapi: "3.1.0",
     info: {
-      title: "Przewodnik Rodzica — API świadczeń z ubezpieczenia chorobowego",
+      title: "Rodzicownik — API świadczeń z ubezpieczenia chorobowego",
       version: "0.1.0",
       description:
         "Ustalanie uprawnień do zasiłku chorobowego w ciąży i zasiłku macierzyńskiego (urlop macierzyński, rodzicielski, ojcowski, uzupełniający, przysposobienie). Wynik zawiera oś czasu, kwoty, ryzyka, dokumenty, terminy i ślad obliczeń z podstawą prawną. Prototyp HackNation 2026 — wynik ma charakter symulacji.",

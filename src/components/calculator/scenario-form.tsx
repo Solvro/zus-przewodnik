@@ -450,7 +450,8 @@ export function PlanSection({ s, step }: { s: Scenario; step: number }) {
 
       {hasFather && !s.loss && (
         <>
-          {!isAdoption && (
+          {!isAdoption && <MotherUnableFields s={s} afterBirth={W} />}
+          {!isAdoption && !plan.motherUnable && s.mother.title !== "none" && (
             <Field
               label="Ile tygodni macierzyńskiego po porodzie wykorzysta mama?"
               htmlFor="motherMat"
@@ -500,6 +501,57 @@ export function PlanSection({ s, step }: { s: Scenario; step: number }) {
         </Callout>
       )}
     </Section>
+  );
+}
+
+const UNABLE_REASONS = [
+  { value: "incapacity", label: "Mama ma orzeczenie o niezdolności do samodzielnej egzystencji" },
+  { value: "hospital", label: "Mama jest w szpitalu i nie może opiekować się dzieckiem" },
+  { value: "death", label: "Mama zmarła" },
+  { value: "abandonment", label: "Mama porzuciła dziecko" },
+] as const;
+
+/** KP art. 180 § 6–15: tata przejmuje urlop macierzyński wcześniej niż po 14 tygodniach. */
+function MotherUnableFields({ s, afterBirth }: { s: Scenario; afterBirth: number }) {
+  const mu = s.plan?.motherUnable;
+  const set = scenarioActions.setPlan;
+  return (
+    <div className="grid gap-4">
+      <Toggle
+        id="motherUnable"
+        checked={!!mu}
+        onChange={(v) => set({ motherUnable: v ? { reason: "hospital", afterWeeks: 8, hospitalWeeks: 2 } : undefined })}
+        label="Sytuacja szczególna mamy"
+        description="Choroba, pobyt w szpitalu, śmierć mamy lub porzucenie dziecka — tata może przejąć urlop macierzyński wcześniej niż po 14 tygodniach."
+      />
+      {mu && (
+        <div className="grid gap-4 rounded-ui bg-canvas p-4 sm:grid-cols-2">
+          <Field label="Co się stało?" htmlFor="muReason" className="sm:col-span-2">
+            <Select id="muReason" value={mu.reason} onChange={(e) => set({ motherUnable: { ...mu, reason: e.target.value as typeof mu.reason } })}>
+              {UNABLE_REASONS.map((r) => (
+                <option key={r.value} value={r.value}>{r.label}</option>
+              ))}
+            </Select>
+          </Field>
+          <Field
+            label="W którym tygodniu po porodzie?"
+            htmlFor="muWeek"
+            hint={mu.reason === "death" ? "Tata przejmuje urlop od dnia śmierci mamy." : "Przejęcie możliwe po wykorzystaniu przez mamę co najmniej 8 tygodni."}
+          >
+            <NumberInput id="muWeek" value={mu.afterWeeks} min={0} max={afterBirth} onChange={(v) => v !== undefined && set({ motherUnable: { ...mu, afterWeeks: Math.round(v) } })} suffix="tydz." />
+          </Field>
+          {mu.reason === "hospital" && (
+            <Field label="Ile tygodni potrwa pobyt w szpitalu?" htmlFor="muHosp" hint="Potem mama wraca do swojej części urlopu.">
+              <NumberInput id="muHosp" value={mu.hospitalWeeks ?? 1} min={1} max={afterBirth} onChange={(v) => v && set({ motherUnable: { ...mu, hospitalWeeks: Math.round(v) } })} suffix="tyg." />
+            </Field>
+          )}
+          <p className="text-xs text-muted sm:col-span-2">
+            Kodeks pracy art. 180 § 6–15, ustawa zasiłkowa art. 29 ust. 5–9. Szczegóły i wsparcie:{" "}
+            <a href="/wsparcie/trudna-sytuacja" className="font-bold text-primary underline underline-offset-4">Trudna sytuacja</a>.
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 

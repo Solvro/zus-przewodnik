@@ -203,7 +203,7 @@ function VariantCompare({ scenario, current }: { scenario: Scenario; current: Ca
                 <p className="font-bold">{v.label}</p>
                 {r.totals.all === best && <Badge tone="success">najwięcej</Badge>}
               </div>
-              <p className="mt-2 text-2xl font-black tabular text-navy">{zl(r.totals.all)}</p>
+              <p className="font-display mt-2 text-3xl tabular text-navy">{zl(r.totals.all)}</p>
               <dl className="mt-2 grid gap-2 text-sm">
                 <div><dt className="text-xs text-muted">Macierzyński miesięcznie</dt><dd className="font-bold tabular">{mat ? zl(mat.monthlyAmount) : "—"}</dd></div>
                 <div><dt className="text-xs text-muted">Rodzicielski miesięcznie</dt><dd className="font-bold tabular">{par ? zl(par.monthlyAmount) : "—"}</dd></div>

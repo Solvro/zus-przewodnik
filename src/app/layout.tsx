@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lato } from "next/font/google";
+import { Fraunces, Lato } from "next/font/google";
 import "./globals.css";
 import { BottomNav, Footer, Header } from "@/components/layout/site-chrome";
 import { A11Y_BOOT_SCRIPT } from "@/components/layout/a11y-toolbar";
@@ -14,10 +14,18 @@ const lato = Lato({
   display: "swap",
 });
 
+// Fraunces — szeryf do nagłówków i dużych kwot (zmienny, z osią optical size; latin-ext = polskie znaki)
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin", "latin-ext"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "Przewodnik Rodzica — świadczenia z ZUS",
-    template: "%s · Przewodnik Rodzica",
+    default: "Rodzicownik — świadczenia z ZUS",
+    template: "%s · Rodzicownik",
   },
   description:
     "Sprawdź, jakie świadczenia z ZUS przysługują Ci w ciąży i po urodzeniu dziecka: ile, jak długo, gdzie złożyć wniosek i na co uważać.",
@@ -26,12 +34,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#007834",
+  themeColor: "#fbf7f0",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pl" className={lato.variable} suppressHydrationWarning>
+    <html lang="pl" className={`${lato.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
         {/* Ustawienia dostępności przed pierwszym renderem — bez migania */}
         <script dangerouslySetInnerHTML={{ __html: A11Y_BOOT_SCRIPT }} />
