@@ -38,7 +38,7 @@ Responsywna aplikacja webowa, która prowadzi przyszłych i świeżych rodziców
 2. **Kalkulator bez logowania:** `/kalkulator` — wybierz sytuację (urodzenie, adopcja, rodzina zastępcza), liczbę dzieci, „Za życiem”, pracę w trakcie urlopu, podział między rodziców. Zakładka **„Skąd te liczby”** pokazuje ślad obliczeń z podstawą prawną dla każdej kwoty.
 3. **Sprawdzenie na dokumentach (PDF):** `/kalkulator/sprawa`
    - **wybór przykładu** — 7 przykładowych spraw (P-01, P-02, J-01, J-02, Z-01, P-03, O-01) z rozstrzygnięciem; wynik silnika porównany z decyzją co do prawa i kwoty,
-   - **upload** — wgraj PDF/PNG/JPG (np. ZAM, Z-3, Z-3a, poświadczenie ubezpieczenia, zrzut z systemu); AI odczyta dane, silnik sprawdzi ubezpieczenie i policzy zasiłek. Przykładowy fikcyjny dokument: [`prezentacja/film/z3-przyklad.pdf`](prezentacja/film/z3-przyklad.pdf). Wymaga klucza AI (patrz [Uruchomienie](#uruchomienie)).
+   - **upload** — wgraj PDF/PNG/JPG (np. ZAM, Z-3, Z-3a, poświadczenie ubezpieczenia, zrzut z systemu); AI odczyta dane, silnik sprawdzi ubezpieczenie i policzy zasiłek. Przykładowy fikcyjny dokument: [`public/przyklady/z3-przyklad.pdf`](public/przyklady/z3-przyklad.pdf) (do pobrania też w aplikacji: `/przyklady/z3-przyklad.pdf`). Wymaga klucza AI (patrz [Uruchomienie](#uruchomienie)).
 4. **Panel admina:** `/admin`, token `demo-admin` — nowa wersja parametrów z datą obowiązywania, włączanie modułów, regresja spraw (7/7), dziennik zmian.
 
 ## Zgodność z wymaganiami zadania

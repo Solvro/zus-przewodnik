@@ -16,7 +16,8 @@ RUN pnpm build
 FROM node:24-alpine AS run
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
-RUN addgroup -S app && adduser -S app -G app
+# curl — healthcheck Coolify (GET /api/v1/health)
+RUN apk add --no-cache curl && addgroup -S app && adduser -S app -G app
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public

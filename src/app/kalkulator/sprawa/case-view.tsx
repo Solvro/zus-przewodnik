@@ -70,6 +70,13 @@ export function CaseView() {
                   onChange={(e) => setFiles((f) => [...f, ...Array.from(e.target.files ?? [])].slice(0, 8))}
                 />
               </div>
+              <p className="text-sm text-muted">
+                Nie masz dokumentu pod ręką?{" "}
+                <a href="/przyklady/z3-przyklad.pdf" download className="font-bold text-primary underline underline-offset-4">
+                  Pobierz przykładowe zaświadczenie Z-3
+                </a>{" "}
+                (fikcyjne dane, PDF) i wgraj je tutaj.
+              </p>
               {files.length > 0 && (
                 <ul className="grid gap-1 text-sm">
                   {files.map((f, i) => (
