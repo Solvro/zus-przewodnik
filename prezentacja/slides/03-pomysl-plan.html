@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>03 Pomysł — plan</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  /* x-plan-full-desktop (2880×5222): źródło x 300–…, y 430–1900, skala 0,526 — spad z prawej */
+  .bleed { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .big {
+    position: absolute; left: 740px; top: 150px; width: 1300px; height: 773px;
+    border-radius: var(--radius) 0 0 var(--radius); border-right: 0;
+  }
+  .big .win { position: absolute; inset: 0; overflow: hidden; border-radius: calc(var(--radius) - 1.5px) 0 0 calc(var(--radius) - 1.5px); }
+  .big .win img { position: absolute; width: 1514.9px; max-width: none; height: auto; left: -157.8px; top: -226.2px; }
+  /* obrys kafla „Razem brutto 87 905,44 zł” na screenie */
+  .mark {
+    position: absolute; left: 744px; top: 454px; width: 196px; height: 124px;
+    border: 4px solid var(--accent); border-radius: 14px; z-index: 7;
+    box-shadow: 0 0 0 6px rgb(250 184 86 / 0.22);
+  }
+  .money { font: 600 112px/1 var(--serif); letter-spacing: -0.02em; color: var(--primary); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+  .money small { font-size: .46em; letter-spacing: 0; margin-left: .12em; }
+</style>
+</head><body>
+<div class="slide">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="abs" style="left:var(--pad-x); top:150px; width:600px">
+    <div class="label">Pomysł · plan, nie poradnik</div>
+    <h1 class="h1" style="margin-top:24px">Plan Waszej rodziny, <span class="hl">policzony</span> z&nbsp;danych ZUS</h1>
+  </div>
+
+  <div class="abs" style="left:var(--pad-x); top:690px; width:620px">
+    <div class="stat" style="padding-top:26px">
+      <div class="money">87 905,44<small>zł</small></div>
+      <div class="caption" style="margin-top:14px; font-size:26px">dla rodziny Anny, brutto</div>
+    </div>
+  </div>
+
+  <div class="bleed">
+    <div class="shot big">
+      <div class="win"><img src="../assets/screens/x-plan-full-desktop.png" alt="Plan Anny: oś czasu „Kto i kiedy jest na zasiłku” i kolumna „Co teraz zrobić” z terminami"></div>
+    </div>
+  </div>
+  <div class="mark"></div>
+  <!-- przeszczep z wersji A: skąd dane (symulacje mObywatel i eZUS) -->
+  <div class="postit abs" style="left:1090px; top:880px"><span class="k">Symulacja</span>mObywatel → dane z eZUS</div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">03 / 10</span>
+  </footer>
+</div>
+</body></html>

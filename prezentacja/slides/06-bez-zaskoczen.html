@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>06 · Bez zaskoczeń</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .win { position: relative; overflow: hidden; }
+  .shot.win > img { position: absolute; max-width: none; height: auto;
+    width: calc(var(--iw, 2880) * var(--s) * 1px);
+    left: calc(var(--sx) * var(--s) * -1px); top: calc(var(--sy) * var(--s) * -1px); }
+  .fade-r { -webkit-mask-image: linear-gradient(90deg, #000 72%, transparent 99%); mask-image: linear-gradient(90deg, #000 72%, transparent 99%); }
+  .tape-wrap { position: absolute; }
+  .tape-wrap .shot { border-radius: var(--radius); }
+
+  .who { display: flex; gap: 14px; flex-wrap: wrap; }
+  .who .chip { font-size: 22px; padding: 8px 18px; }
+  .who .chip b { color: var(--primary); }
+
+  .tl { position: absolute; list-style: none; }
+  .tl::before { content: ""; position: absolute; left: 11px; top: 18px; bottom: 30px; width: 3px; background: var(--primary-200); border-radius: 2px; }
+  .tl li { position: relative; padding-left: 52px; }
+  .tl li + li { margin-top: 52px; }
+  .tl li::before { content: ""; position: absolute; left: 0; top: 14px; width: 25px; height: 25px; border-radius: 50%;
+    background: var(--primary); box-shadow: 0 0 0 6px var(--paper); }
+  .tl li.key::before { background: var(--accent); box-shadow: 0 0 0 6px var(--paper), 0 0 0 9px var(--accent); }
+  .tl .d { display: block; font: 600 52px/1.05 var(--serif); letter-spacing: -0.012em; color: var(--primary); font-variant-numeric: lining-nums tabular-nums; }
+  .tl .t { display: block; margin-top: 4px; font: 700 24px/1.3 var(--sans); color: var(--heading); }
+  .tl .t span { font-weight: 400; color: var(--muted); }
+  .note { position: absolute; font: 700 26px/1.3 var(--sans); color: var(--heading); }
+  .note::after { content: ""; display: block; width: 64px; height: 3px; background: var(--accent); margin-top: 14px; margin-left: auto; }
+</style>
+</head><body>
+<div class="slide">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <!-- lewa trzecia: teza + typograficzna oś terminów (daty z planu Anny) -->
+  <div class="abs" style="left:var(--pad-x); top:150px; width:600px">
+    <div class="label" style="white-space:nowrap">Wymagania g, h · dokumenty, terminy, ryzyka</div>
+    <h1 class="h1" style="margin-top:20px; font-size:68px; text-wrap:nowrap">Wiadomo, kto wypłaci,<br>co złożyć i <span class="hl">do kiedy</span></h1>
+    <div class="who" style="margin-top:28px">
+      <span class="chip">Mama → <b>pracodawca</b></span>
+      <span class="chip">Tata → <b>ZUS</b></span>
+    </div>
+  </div>
+
+  <ol class="tl" style="left:var(--pad-x); top:470px; width:600px">
+    <li><span class="d">29.12.2026</span><span class="t">Wniosek o urlop ojcowski <span>· tata</span></span></li>
+    <li class="key"><span class="d">26.01.2027</span><span class="t">Ostatni dzień na wniosek o 81,5% <span>· mama</span></span></li>
+    <li><span class="d">04.05.2027</span><span class="t">Wniosek o urlop rodzicielski <span>· mama</span></span></li>
+  </ol>
+
+  <!-- x-wniosek: podgląd wydruku, przyklejony taśmą -->
+  <div class="tape-wrap tape" style="left:870px; top:166px; transform:rotate(-1deg)">
+    <div class="shot win" style="width:800px; height:598px; --s:0.6957; --sx:1440; --sy:640">
+      <img src="../assets/screens/x-wniosek-full-desktop.png" alt="Wniosek o udzielenie urlopu rodzicielskiego, wypełniony danymi z planu">
+    </div>
+  </div>
+  <div class="postit r abs" style="left:1500px; top:178px; max-width:340px">Wniosek wypełniony<br>z planu</div>
+
+  <!-- x-kalk-ryzyka: karta ryzyka -->
+  <div class="abs" style="left:1150px; top:796px; z-index:4">
+    <div class="shot win fade-r" style="width:676px; height:132px; --s:0.8; --sx:1291; --sy:982">
+      <img src="../assets/screens/x-kalk-ryzyka-desktop.png" alt="Ryzyko: wybrano wariant 81,5% — wniosek najpóźniej 21 dni po porodzie">
+    </div>
+  </div>
+  <div class="note" style="left:810px; top:806px; width:300px; text-align:right">Ryzyka, zanim<br>przyjdzie decyzja</div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">06 / 10</span>
+  </footer>
+</div>
+</body></html>

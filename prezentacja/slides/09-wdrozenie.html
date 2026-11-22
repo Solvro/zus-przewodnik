@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>09 · Wdrożenie</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  /* wycinek screena: --s skala, --x/--y lewy górny róg kadru w px oryginału (2880 px szer.) */
+  .win { position: absolute; overflow: hidden; }
+  .shot.win > img {
+    position: absolute; max-width: none; height: auto;
+    width: calc(2880px * var(--s));
+    left: calc(var(--x) * -1px * var(--s));
+    top: calc(var(--y) * -1px * var(--s));
+  }
+  /* obrys bursztynem — współrzędne w px oryginału */
+  .ring {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: calc((var(--rx) - var(--x)) * 1px * var(--s) - 8px);
+    top: calc((var(--ry) - var(--y)) * 1px * var(--s) - 8px);
+    width: calc(var(--rw) * 1px * var(--s) + 16px);
+    height: calc(var(--rh) * 1px * var(--s) + 16px);
+    border: 4px solid var(--accent); border-radius: 14px;
+    box-shadow: 0 0 0 6px rgb(250 184 86 / 0.22);
+  }
+  .side { position: absolute; left: 1296px; top: 330px; width: 528px; display: flex; flex-direction: column; gap: 56px; }
+  .side .stat { padding-top: 12px; }
+  .side .stat .num { font-size: 74px; }
+  .side .stat .cap { margin-top: 6px; max-width: none; }
+  .postit .big { display: block; font: 600 40px/1.05 var(--serif); letter-spacing: -0.012em; }
+  .postit .sub { display: block; margin-top: 8px; font: 700 24px/1.25 var(--sans); }
+  .chips { position: absolute; right: var(--pad-x); top: 232px; display: flex; gap: 14px; }
+</style>
+</head><body>
+<div class="slide">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="abs" style="left:var(--pad-x); top:150px">
+    <div class="label">Potencjał wdrożeniowy</div>
+    <h1 class="h1" style="margin-top:18px">Gotowe do <span class="hl">wdrożenia</span> w ZUS</h1>
+  </div>
+  <div class="chips">
+    <span class="chip">REST API</span>
+    <span class="chip">OpenAPI 3.1</span>
+  </div>
+
+  <!-- panel admina: zakładki + nowa wersja parametrów + publikacja -->
+  <div class="shot win" style="left:var(--pad-x); top:330px; width:1110px; height:600px; --s:0.4826; --x:291; --y:349">
+    <img src="../assets/screens/x-admin-full-desktop.png" alt="Panel administracyjny Rodzicownika: wersjonowane parametry prawne">
+    <span class="ring" style="--rx:362; --ry:1407; --rw:598; --rh:85"></span>
+    <span class="ring" style="--rx:1726; --ry:1093; --rw:790; --rh:86"></span>
+  </div>
+
+  <div class="postit abs" style="left:776px; top:800px; max-width:440px">
+    <span class="k">Nowe przepisy, nie nowy kod</span>
+    <span class="big">81,5% → 0,815</span>
+    <span class="sub">obowiązuje od 01.01.2027</span>
+  </div>
+
+  <div class="side">
+    <div class="stat"><span class="num">75</span><span class="cap">testów jednostkowych, wszystkie przechodzą</span></div>
+    <div class="stat"><span class="num">14</span><span class="cap">stron z audytem WCAG 2.1 AA, desktop i mobile</span></div>
+    <div class="stat"><span class="num">7</span><span class="cap">modułów włączanych w panelu</span></div>
+  </div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">09 / 10</span>
+  </footer>
+</div>
+</body></html>

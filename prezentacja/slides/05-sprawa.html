@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>05 · Sprawa</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .win { position: absolute; overflow: hidden; width: var(--W); height: var(--H); }
+  .shot.win > img { position: absolute; max-width: none; height: auto;
+    width: calc(var(--W) * var(--iw) / var(--sw));
+    left: calc(var(--W) * var(--sx) / var(--sw) * -1);
+    top: calc(var(--W) * var(--sy) / var(--sw) * -1); }
+  .steps { position: absolute; left: 96px; top: 322px; width: 1728px; display: grid; grid-template-columns: repeat(3, 540px); column-gap: 54px; }
+  .step { position: relative; display: flex; align-items: center; gap: 18px; font: 900 30px/1.15 var(--sans); color: var(--heading); }
+  .step .n { flex: none; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--primary); color: var(--paper); font: 600 30px/1 var(--serif); box-shadow: 0 0 0 8px var(--paper); position: relative; z-index: 1; }
+  .step .ai { font: 900 16px/1 var(--sans); letter-spacing: .08em; background: var(--info); color: #fff; padding: 5px 8px; border-radius: 6px; }
+  .step.last .n { background: var(--accent); color: var(--heading); }
+</style>
+</head><body>
+<div class="slide">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="abs" style="left:var(--pad-x); top:150px; width:1500px">
+    <div class="label">Wymaganie f · tak przetestujecie demo</div>
+    <h1 class="h1" style="margin-top:18px">Sprawdzone na <span class="hl">dokumentach</span> sprawy</h1>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span class="n">1</span>Wgraj PDF lub wybierz przykład</div>
+    <div class="step"><span class="n">2</span>Odczyt dokumentów <span class="ai">AI</span></div>
+    <div class="step last"><span class="n">3</span>Silnik porównuje z decyzją</div>
+  </div>
+
+  <!-- trzy wycinki z x-sprawa-wynik-full-mobile (1170 px szer.); krok 1 = lista przykładowych spraw (karta uploadu jest na slajdzie 08) -->
+  <div class="shot win" style="left:96px; top:410px; --W:540px; --H:540px; --iw:1170; --sw:1110; --sx:30; --sy:2250">
+    <img src="../assets/screens/x-sprawa-wynik-full-mobile.png" alt="Lista przykładowych spraw: P-01 pracownica, mały płatnik (Z-3)">
+  </div>
+  <div class="shot win" style="left:690px; top:410px; --W:540px; --H:540px; --iw:1170; --sw:1110; --sx:30; --sy:7034">
+    <img src="../assets/screens/x-sprawa-wynik-full-mobile.png" alt="Odczytane dane: tytuł ubezpieczenia, okres, płatnik">
+  </div>
+  <div class="shot win" style="left:1284px; top:410px; --W:540px; --H:400px; --iw:1170; --sw:1110; --sx:30; --sy:5842; outline: 6px solid var(--accent); outline-offset: 6px">
+    <img src="../assets/screens/x-sprawa-wynik-full-mobile.png" alt="Porównanie z decyzją: prawo i kwota zgodne">
+  </div>
+
+  <div class="postit abs" style="left:1300px; top:858px; max-width:none; white-space:nowrap"><b style="font-size:36px">7/7</b>&nbsp; spraw zgodnych z decyzją</div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">05 / 10</span>
+  </footer>
+</div>
+</body></html>

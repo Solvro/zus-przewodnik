@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>08 AI — gdzie działa AI</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .clip {
+    position: relative; overflow: hidden; border-radius: var(--radius);
+    background: #fff; border: 1.5px solid rgb(251 247 240 / .14);
+    box-shadow: none;
+    width: calc((var(--x1) - var(--x0)) * var(--s) * 1px);
+    height: calc((var(--y1) - var(--y0)) * var(--s) * 1px);
+  }
+  .clip > img {
+    position: absolute; left: 0; top: 0; max-width: none;
+    width: calc(var(--iw, 2880) * var(--s) * 1px);
+    transform: translate(calc(var(--x0) * var(--s) * -1px), calc(var(--y0) * var(--s) * -1px));
+  }
+  .row4 { position: absolute; left: var(--pad-x); top: 536px; display: flex; align-items: flex-start; gap: 28px; }
+  .card { display: flex; flex-direction: column; gap: 16px; }
+  .lab { min-height: 66px; }
+  .lab b { display: flex; align-items: center; gap: 10px; font: 700 26px/1.2 var(--sans); color: var(--paper); white-space: nowrap; }
+  .lab span { display: block; margin-top: 4px; font: 400 22px/1.2 var(--sans); color: rgb(251 247 240 / .7); }
+  .ai-b { font: 900 15px/1 var(--sans); letter-spacing: .08em; background: #cfe0ee; color: var(--info); padding: 5px 8px; border-radius: 6px; }
+  .noai-b { font: 900 15px/1 var(--sans); letter-spacing: .08em; background: var(--accent); color: var(--heading); padding: 5px 8px; border-radius: 6px; }
+  .sep { width: 2px; align-self: stretch; background: rgb(251 247 240 / .18); margin: 0 10px; }
+  .card.engine .clip { border: 3px solid var(--primary-200); }
+  .card.engine .lab b { color: var(--primary-200); }
+</style>
+</head><body>
+<div class="slide dark">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="abs" style="left:var(--pad-x); top:150px; width:1500px">
+    <div class="label">Wskazanie funkcji z AI</div>
+    <h1 class="h1 xl" style="margin-top:22px">AI czyta i tłumaczy.<br><span class="green">Liczy silnik reguł.</span></h1>
+  </div>
+
+  <div class="row4">
+    <div class="card">
+      <div class="lab"><b><i class="ai-b">AI</i>Odczyt dokumentów</b><span>GPT-5.5</span></div>
+      <div class="clip" style="--x0:315; --y0:566; --x1:1000; --y1:969; --s:.4526">
+        <img src="../assets/screens/x-sprawa-wynik-desktop.png" alt="Wgraj dokumenty z odznaką AI">
+      </div>
+    </div>
+    <div class="card">
+      <div class="lab"><b><i class="ai-b">AI</i>Asystent ze źródłami</b><span>GPT-5.4 mini</span></div>
+      <div class="clip" style="--iw:1170; --x0:0; --y0:225; --x1:1170; --y1:915; --s:.2650">
+        <img src="../assets/screens/x-asystent-mobile.png" alt="Asystent z odznaką AI i pytaniem">
+      </div>
+    </div>
+    <div class="card">
+      <div class="lab"><b><i class="ai-b">AI</i>Prosty język</b><span>GPT-5.4 mini</span></div>
+      <div class="clip" style="--x0:1810; --y0:1774; --x1:2580; --y1:2118; --s:.4026; height:182px; background:#FAF6EF">
+        <img style="top:22px; clip-path: inset(714px 0 1249px 0)" src="../assets/screens/x-plan-full-desktop.png" alt="Wyjaśnij prostym językiem — karta z odznaką AI w planie">
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="card engine">
+      <div class="lab"><b><i class="noai-b">BEZ AI</i>Skąd te liczby</b><span>kwoty i prawo do zasiłku: silnik reguł</span></div>
+      <div class="clip" style="--x0:1300; --y0:1105; --x1:2555; --y1:1620; --s:.5179">
+        <img src="../assets/screens/x-kalk-skad-te-liczby-desktop.png" alt="Skąd te liczby: ślad obliczeń z podstawą prawną">
+      </div>
+    </div>
+  </div>
+
+  <div class="caption abs" style="left:var(--pad-x); top:842px; width:980px; font-size:22px; line-height:1.45">OpenAI w demo · Claude obsługiwany · tryb awaryjny bez klucza<br><span style="opacity:.75">Rozwiązania zewnętrzne: OpenAI API, Anthropic API, ElevenLabs (lektor filmu), Next.js, React, Tailwind, Radix, TanStack Query, fonty Lato i Fraunces</span></div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">08 / 10</span>
+  </footer>
+</div>
+</body></html>

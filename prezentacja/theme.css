@@ -1,0 +1,334 @@
+/* =====================================================================
+   Rodzicownik — chrome talii (ZUS × HackNation 2026)
+   Wspólny arkusz dla wszystkich slajdów 1920×1080.
+   Slajdy leżą w work/ albo slides/ → <link rel="stylesheet" href="../theme.css">
+   Obrazy: ../assets/screens/…, logo: ../assets/logo.svg
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Lato:wght@400;700;900&display=swap");
+
+:root {
+  /* brand — FINALNY (brief/brand.md) */
+  --primary: #007834;
+  --primary-strong: #025a28;
+  --primary-50: #e8f3ec;
+  --primary-100: #cde6d6;
+  --primary-200: #9fceb1;
+  --heading: #12352a;
+  --accent: #fab856;
+  --accent-50: #fdf0d8;
+  --paper: #fbf7f0;
+  --paper-deep: #f3ecdf;
+  --card: #ffffff;
+  --ink: #1e2a33;
+  --muted: #5a616c;
+  --line: #e6ddcd;
+  --danger: #cd0000;
+  --info: #00416e;
+  --tl-100: #007834;
+  --tl-815: #8cc5a1;
+  --tl-70: #d9eedf;
+  --tl-dad: #2f6b8f;
+
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Lato", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  /* siatka slajdu */
+  --pad-x: 96px;          /* margines lewy/prawy treści */
+  --top: 150px;           /* pierwsza linia treści pod chrome */
+  --foot: 132px;          /* strefa stopki (nie wchodź treścią poniżej 1080 - foot) */
+  --radius: 18px;
+  --shadow: 0 3px 0 rgb(18 53 42 / 0.07);
+  --shadow-soft: 0 2px 0 rgb(18 53 42 / 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #d9d4ca; }
+body { width: 1920px; height: 1080px; overflow: hidden; }
+
+/* ---------- slajd ---------- */
+.slide {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 26px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+.slide img { display: block; }
+
+/* kratka papieru (motyw marki) — dodaj klasę .paper-grid do .slide albo do bloku */
+.paper-grid {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--paper-deep) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--paper-deep) 1.5px, transparent 1.5px);
+  background-size: 36px 36px;
+  background-position: -1px -1px;
+}
+
+/* ---------- chrome: góra ----------
+   <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header> */
+.chrome-top {
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 96px;
+  padding: 40px var(--pad-x) 0 56px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  font: 700 22px/1 var(--sans);
+  letter-spacing: 0.01em;
+  color: var(--heading);
+  z-index: 20;
+}
+.chrome-top::after {               /* cienka linia akcentu — prawa połowa, do krawędzi */
+  content: ""; position: absolute; right: 0; top: 82px;
+  width: 50%; height: 3px; background: var(--primary);
+}
+.chrome-top .dot { color: var(--accent); padding: 0 .35em; }
+
+/* ---------- chrome: dół ----------
+   <footer class="chrome-foot">
+     <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+     <span class="pageno">03 / 10</span>
+   </footer> */
+.chrome-foot {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: var(--foot);
+  padding: 0 var(--pad-x) 44px 56px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  z-index: 20;
+  pointer-events: none;
+}
+.chrome-foot::after {              /* linia pod lockupem — lewa strona, od krawędzi */
+  content: ""; position: absolute; left: 0; bottom: 22px;
+  width: 640px; height: 3px; background: var(--primary);
+}
+.lockup { display: flex; align-items: center; gap: 16px; }
+.lockup img { width: 56px; height: 56px; }
+.lockup span { font: 600 34px/1 var(--serif); letter-spacing: -0.012em; color: var(--heading); }
+.lockup small { display: block; font: 400 18px/1.2 var(--sans); color: var(--muted); letter-spacing: 0; margin-top: 4px; }
+.pageno { margin-left: auto; font: 400 22px/1 var(--mono); color: var(--muted); letter-spacing: 0.04em; position: relative; z-index: 21; }
+.pageno:empty::before { content: attr(data-n) " / 10"; }
+/* prawy dolny róg (ok. 220×120 px) zostaw pusty dla licznika */
+/* slajd z ogromnym słowem: bez lockupu i linii (jak w otwarciach inspiracji) */
+.slide:has(.big-word) .chrome-foot .lockup,
+.slide:has(.big-word) .chrome-foot::after,
+.slide.no-lockup .chrome-foot .lockup,
+.slide.no-lockup .chrome-foot::after { display: none; }
+
+/* ---------- typografia ---------- */
+.label {
+  font: 900 22px/1.2 var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--primary);
+}
+.h1, .h2, .num, .serif { font-family: var(--serif); font-weight: 600; letter-spacing: -0.012em; color: var(--heading); }
+.h1 { font-size: 84px; line-height: 1.04; text-wrap: balance; }
+.h1.xl { font-size: 116px; line-height: 1; }
+.h1.sm { font-size: 68px; }
+.h2 { font-size: 44px; line-height: 1.1; }
+.lead { font-size: 30px; line-height: 1.4; color: var(--muted); max-width: 30em; }
+.body { font-size: 26px; line-height: 1.45; }
+.caption { font-size: 22px; line-height: 1.35; color: var(--muted); }
+.mono { font-family: var(--mono); }
+.green { color: var(--primary); }
+
+/* bursztynowy zakreślacz — jak „policzony” w hero aplikacji */
+.hl {
+  background: linear-gradient(transparent 56%, var(--accent) 56%, var(--accent) 90%, transparent 90%);
+  padding: 0 .06em;
+  margin: 0 -.06em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+
+/* ---------- screeny ---------- */
+.shot {
+  position: relative;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.shot > img { width: 100%; height: auto; }
+/* przycięcie od góry: <div class="shot crop" style="--h:560px"><img …></div> */
+.shot.crop { height: var(--h, 600px); }
+.shot.crop > img { height: 100%; object-fit: cover; object-position: var(--pos, top center); }
+/* wycinek z dowolnego miejsca screena (powiększenie): ustaw --pos np. "70% 40%" i --zoom */
+.shot.zoom > img { width: calc(var(--zoom, 1.6) * 100%); max-width: none; height: auto; object-fit: initial; transform: translate(var(--tx, 0), var(--ty, 0)); }
+/* karta jakby przyklejona — lekki obrót */
+.shot.tilt-l { transform: rotate(-1.5deg); }
+.shot.tilt-r { transform: rotate(1.5deg); }
+
+/* telefon dla screenów mobile (1170×2532) — szerokość przez --w */
+.shot-phone {
+  position: relative;
+  width: var(--w, 360px);
+  aspect-ratio: 390 / 844;
+  padding: 34px 12px 12px;
+  border-radius: 58px;
+  background: var(--heading);
+  box-shadow: var(--shadow), inset 0 0 0 2px rgb(255 255 255 / 0.08);
+}
+.shot-phone > img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  border-radius: 10px 10px 46px 46px;
+}
+.shot-phone::before {              /* wyspa / kamera */
+  content: ""; position: absolute; z-index: 2;
+  top: 11px; left: 50%; width: 28%; height: 14px; transform: translateX(-50%);
+  border-radius: 10px; background: rgb(255 255 255 / 0.14);
+}
+/* przycięty telefon (wystaje za dolną krawędź / widać tylko górę) */
+.shot-phone.cut { aspect-ratio: auto; height: var(--h, 640px); border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding-bottom: 0; }
+.shot-phone.cut > img { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+
+/* taśma — dodaj do .shot / .postit (dwa paski na górnych rogach) */
+.tape { overflow: visible; }
+.tape::before, .tape::after {
+  content: ""; position: absolute; z-index: 5;
+  width: 150px; height: 40px;
+  background: rgb(250 184 86 / 0.42);
+  border-left: 1px dashed rgb(18 53 42 / 0.08);
+  border-right: 1px dashed rgb(18 53 42 / 0.08);
+}
+.tape::before { top: -14px; left: -44px; transform: rotate(-32deg); }
+.tape::after  { top: -14px; right: -44px; transform: rotate(32deg); }
+/* .shot z taśmą: obrazek musi zostać przycięty do zaokrąglenia */
+.shot.tape > img { border-radius: calc(var(--radius) - 1.5px); }
+.shot.tape.crop > img { border-radius: calc(var(--radius) - 1.5px); }
+
+/* karteczka post-it — bursztyn, obrót −2°, tylko ciemny tekst */
+.postit {
+  position: relative;
+  display: inline-block;
+  max-width: 440px;
+  padding: 26px 32px 28px;
+  background: var(--accent);
+  color: var(--heading);
+  font: 700 26px/1.3 var(--sans);
+  border-radius: 6px 6px 14px 6px;
+  transform: rotate(-2deg);
+  box-shadow: 0 4px 0 rgb(18 53 42 / 0.10);
+  z-index: 6;
+}
+.postit b, .postit .num { font-family: var(--serif); font-weight: 600; }
+.postit.r { transform: rotate(2deg); }
+.postit .k { display: block; font: 900 18px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; opacity: .72; margin-bottom: 8px; }
+
+/* callout przy screenie: krótka etykieta z kropką i linią */
+.callout {
+  display: flex; gap: 16px; align-items: baseline;
+  font: 700 26px/1.3 var(--sans); color: var(--heading);
+}
+.callout .n {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; transform: translateY(6px);
+  background: var(--primary); color: var(--paper);
+  font: 600 24px/1 var(--serif);
+}
+.callout small { display: block; font: 400 22px/1.35 var(--sans); color: var(--muted); margin-top: 4px; }
+
+/* ogromne słowo uciekające za dolną krawędź (slajdy-otwarcia)
+   <div class="big-word">Problem</div> — samo się przycina (brak OVERFLOW w render.mjs).
+   --cut = ile pikseli słowa widać nad dolną krawędzią */
+.big-word {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: var(--cut, 330px);
+  padding-left: calc(var(--pad-x) - 0.04em);
+  overflow: hidden;
+  font: 600 var(--size, 440px)/0.82 var(--serif);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  color: var(--heading);
+  pointer-events: none;
+  z-index: 1;
+}
+.big-word.outline { color: transparent; -webkit-text-stroke: 3px var(--heading); }
+.big-word.soft { color: var(--primary-100); }
+
+/* liczby-statystyki */
+.stat { border-top: 3px solid var(--heading); padding-top: 18px; }
+.stat .num { display: block; font-size: 96px; line-height: 1; color: var(--primary); font-variant-numeric: lining-nums tabular-nums; }
+.stat .num small { font-size: .5em; }
+.stat .cap { display: block; margin-top: 12px; font-size: 22px; line-height: 1.35; color: var(--muted); max-width: 16em; }
+.stats { display: grid; grid-template-columns: repeat(var(--cols, 4), 1fr); gap: 48px; }
+
+/* pastylki i lista kontrolna (slajd z checklistą) */
+.chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 2px solid var(--heading); color: var(--heading);
+  font: 700 22px/1.2 var(--sans); white-space: nowrap;
+}
+.chip.ai { border-color: var(--info); color: var(--info); }
+.chip.ai::before { content: "AI"; font: 900 15px/1 var(--sans); letter-spacing: .08em; background: var(--info); color: #fff; padding: 4px 7px; border-radius: 6px; }
+.check { list-style: none; }
+.check li {
+  display: grid; grid-template-columns: 54px 1fr; align-items: baseline;
+  padding: 12px 0; border-top: 1.5px solid var(--line);
+  font: 700 24px/1.3 var(--sans); color: var(--heading);
+}
+.check li .k { font: 400 20px/1 var(--mono); color: var(--primary); }
+.check li small { grid-column: 2; font: 400 20px/1.3 var(--sans); color: var(--muted); }
+.check li::after { content: none; }
+.tick { color: var(--primary); font-weight: 900; margin-right: 8px; }
+
+/* odznaka AI (jak w aplikacji) */
+.badge-ai {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--accent-50); border: 1.5px solid var(--accent);
+  color: var(--heading); font: 900 18px/1.2 var(--sans); letter-spacing: .06em;
+}
+
+/* placeholder do uzupełnienia — wyraźny */
+.todo { background: var(--accent-50); outline: 2px dashed var(--accent); padding: 0 .2em; border-radius: 4px; }
+
+/* ---------- warianty tła ---------- */
+.slide.dark { background: var(--heading); color: var(--paper); }
+.slide.dark .chrome-top, .slide.dark .lockup span, .slide.dark .h1, .slide.dark .h2, .slide.dark .num:not(.keep) { color: var(--paper); }
+.slide.dark .chrome-top::after, .slide.dark .chrome-foot::after { background: var(--accent); }
+.slide.dark .label { color: var(--accent); }
+.slide.dark .lead, .slide.dark .caption, .slide.dark .pageno, .slide.dark .stat .cap, .slide.dark .lockup small { color: rgb(251 247 240 / 0.72); }
+.slide.dark .stat { border-top-color: rgb(251 247 240 / 0.5); }
+.slide.dark .stat .num { color: var(--accent); }
+.slide.dark .big-word { color: var(--paper); }
+.slide.dark .big-word.soft { color: rgb(251 247 240 / 0.1); }
+.slide.dark .big-word.outline { -webkit-text-stroke-color: rgb(251 247 240 / 0.6); }
+.slide.dark .chip { border-color: rgb(251 247 240 / 0.7); color: var(--paper); }
+.slide.dark .check li { border-top-color: rgb(251 247 240 / 0.16); color: var(--paper); }
+.slide.dark .check li .k { color: var(--accent); }
+.slide.dark .check li small { color: rgb(251 247 240 / 0.7); }
+.slide.dark .callout { color: var(--paper); }
+.slide.dark .callout small { color: rgb(251 247 240 / 0.72); }
+.slide.dark .shot { border-color: rgb(251 247 240 / 0.12); box-shadow: none; }
+.slide.dark .shot-phone { background: #0b241c; box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.12); }
+.slide.dark .lockup img, .slide.green .lockup img { content: url("assets/logo-inverse.svg"); }
+.slide.dark .hl, .slide.green .hl { color: var(--heading); background: var(--accent); padding: 0 .14em; margin: 0 -.04em; border-radius: 6px; }
+.slide.dark .green { color: var(--primary-200); }
+
+.slide.green { background: var(--primary); color: var(--paper); }
+.slide.green .chrome-top, .slide.green .lockup span, .slide.green .h1, .slide.green .h2, .slide.green .num { color: var(--paper); }
+.slide.green .chrome-top::after, .slide.green .chrome-foot::after { background: var(--paper); }
+.slide.green .label { color: var(--accent); }
+.slide.green .lead, .slide.green .caption, .slide.green .pageno, .slide.green .stat .cap { color: rgb(251 247 240 / 0.8); }
+.slide.green .stat { border-top-color: rgb(251 247 240 / 0.6); }
+.slide.green .stat .num { color: var(--paper); }
+.slide.green .big-word { color: var(--paper); }
+.slide.green .chip { border-color: var(--paper); color: var(--paper); }
+.slide.green .shot { border-color: rgb(0 0 0 / 0.08); box-shadow: none; }
+.slide.green .shot-phone { background: var(--heading); }
+
+/* ---------- pomocnicze układy ---------- */
+.abs { position: absolute; }
+.content { position: absolute; left: var(--pad-x); right: var(--pad-x); top: var(--top); bottom: var(--foot); }
+.row { display: flex; gap: 48px; }
+.col { display: flex; flex-direction: column; gap: 24px; }
+.stack > * + * { margin-top: 20px; }

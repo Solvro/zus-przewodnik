@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>04 Kalkulator</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  /* kadr screena desktop: --s skala, --x/--y lewy górny róg kadru w px oryginału (2880×1800) */
+  .frame { position: absolute; overflow: hidden; }
+  .frame.shot > img { position: absolute; max-width: none; height: auto;
+    width: calc(2880px * var(--s));
+    left: calc(-1px * var(--x) * var(--s));
+    top: calc(-1px * var(--y) * var(--s)); }
+  .ring { position: absolute; border: 4px solid var(--accent); border-radius: 14px;
+    box-shadow: 0 0 0 6px rgb(250 184 86 / 0.22); z-index: 4; }
+  .postit { font-size: 26px; max-width: 420px; padding: 22px 28px 24px; }
+  .postit .n { display: inline-grid; place-items: center; width: 38px; height: 38px; margin-right: 10px;
+    border-radius: 50%; background: var(--heading); color: var(--accent);
+    font: 600 22px/1 var(--serif); vertical-align: 3px; }
+</style>
+</head><body>
+<div class="slide paper-grid">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="abs" style="left:var(--pad-x); top:150px; width:540px">
+    <div class="label">Kalkulator · wymagania b–f, j</div>
+    <h1 class="h1" style="margin-top:22px; font-size:76px">Jeden kalkulator na <span class="hl">każdą</span> sytuację</h1>
+  </div>
+
+  <!-- x-kalkulator-desktop: kadr od karty „Twoja sytuacja” w dół -->
+  <div class="frame shot" style="left:674px; top:170px; width:1150px; height:652px; --s:0.5; --x:290; --y:476">
+    <img src="../assets/screens/x-kalkulator-desktop.png" alt="Kalkulator zasiłku: wybór sytuacji, przełączniki i wynik z podstawą prawną">
+  </div>
+
+  <!-- obrysy kluczowych elementów -->
+  <div class="ring" style="left:700px; top:264px; width:428px; height:238px"></div>
+  <div class="ring" style="left:697px; top:640px; width:436px; height:82px"></div>
+  <div class="ring" style="left:1180px; top:787px; width:388px; height:34px"></div>
+
+  <!-- karteczki -->
+  <div class="postit abs" style="left:366px; top:492px"><span class="n">1</span>Urodzenie, adopcja,<br>rodzina zastępcza</div>
+  <div class="postit r abs" style="left:318px; top:676px; max-width:460px"><span class="n">2</span>„Za życiem”, wieloraczki,<br>praca na część etatu</div>
+  <div class="postit abs" style="left:1196px; top:840px; max-width:520px"><span class="n">3</span>Każda kwota z podstawą prawną</div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">04 / 10</span>
+  </footer>
+</div>
+</body></html>

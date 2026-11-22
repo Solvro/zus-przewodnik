@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>01 Tytuł</title>
+<link rel="stylesheet" href="../theme.css">
+<style>
+  .left { position:absolute; left:var(--pad-x); top:176px; width:740px; z-index:4; }
+  .brand { display:flex; align-items:center; gap:30px; }
+  .brand img { width:150px; height:150px; }
+  .brand span { font:600 92px/1 var(--serif); letter-spacing:-0.02em; color:var(--heading); }
+  .left .label { margin-top:56px; max-width:none; white-space:nowrap; line-height:1.45; }
+  .left .h1 { margin-top:20px; font-size:80px; text-wrap:initial; }
+  .people { margin-top:44px; display:flex; flex-direction:column; gap:10px; }
+  .people .who { font:900 26px/1.2 var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--heading); }
+  .people .org { font:700 24px/1.2 var(--sans); color:var(--primary); }
+  .slide .big-word { --size:362px; --cut:226px; padding-left:82px; }
+  .shot-wrap { position:absolute; left:880px; top:236px; width:960px; z-index:3; }
+  .shot-wrap .postit { position:absolute; left:-70px; bottom:-48px; }
+</style>
+</head><body>
+<div class="slide">
+  <header class="chrome-top"><span>KN Solvro</span><span>ZUS × HackNation 2026</span></header>
+
+  <div class="left">
+    <div class="brand"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <div class="label">Wyzwanie ZUS × HackNation 2026<br>Zasiłkowy Przewodnik Przyszłego Rodzica</div>
+    <h1 class="h1">Urlopy i zasiłki z&nbsp;ZUS,<br><span class="hl">policzone</span> dla Ciebie</h1>
+    <div class="people">
+      <span class="who">Tomasz Trela · Dominika Stefaniak</span>
+      <span class="org">KN Solvro</span>
+    </div>
+  </div>
+
+  <div class="shot-wrap">
+    <div class="shot crop tape tilt-r" style="--h:500px">
+      <img src="../assets/screens/home-desktop.png" alt="Strona główna Rodzicownika">
+    </div>
+  </div>
+
+  <div class="big-word soft" aria-hidden="true">Rodzicownik</div>
+
+  <footer class="chrome-foot">
+    <div class="lockup"><img src="../assets/logo.svg" alt=""><span>Rodzicownik</span></div>
+    <span class="pageno">01 / 10</span>
+  </footer>
+</div>
+</body></html>

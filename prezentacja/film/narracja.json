@@ -1,0 +1,189 @@
+{
+  "voice_id": "XrExE9yKIg1WjnnlVkGX",
+  "model_id": "eleven_v3",
+  "scenes": [
+    {
+      "id": "s1",
+      "chunks": [
+        {
+          "sub": "Przyszli rodzice często dowiadują się o swoich prawach <b>za późno</b>,",
+          "tts": "Przyszli rodzice często dowiadują się o swoich prawach za późno,"
+        },
+        {
+          "sub": "kiedy terminy już minęły, a decyzja ZUS ich zaskakuje.",
+          "tts": "kiedy terminy już minęły, a decyzja ZUS ich zaskakuje."
+        },
+        {
+          "sub": "Rodzicownik to zmienia, bo liczy wszystko <b>z wyprzedzeniem</b>,",
+          "tts": "Rodzicownik to zmienia, bo liczy wszystko z wyprzedzeniem,"
+        },
+        {
+          "sub": "dla konkretnej rodziny.",
+          "tts": "dla konkretnej rodziny."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "chunks": [
+        {
+          "sub": "Anna loguje się przez <b>mObywatela</b>",
+          "tts": "Anna loguje się przez em-Obywatela"
+        },
+        {
+          "sub": "i potwierdza logowanie kodem w telefonie,",
+          "tts": "i potwierdza logowanie kodem w telefonie,"
+        },
+        {
+          "sub": "a aplikacja pobiera jej dane z ZUS: ubezpieczenie, płatnika i zarobki.",
+          "tts": "a aplikacja pobiera jej dane z ZUS: ubezpieczenie, płatnika i zarobki."
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "chunks": [
+        {
+          "sub": "Od razu widzi, że <b>ma prawo do zasiłku</b> na dzień porodu.",
+          "tts": "Od razu widzi, że ma prawo do zasiłku na dzień porodu."
+        },
+        {
+          "sub": "Dostaje kwoty i wspólną <b>oś czasu dla obojga rodziców</b>,",
+          "tts": "Dostaje kwoty i wspólną oś czasu dla obojga rodziców,"
+        },
+        {
+          "sub": "a obok listę terminów, zanim którykolwiek z nich minie.",
+          "tts": "a obok listę terminów, zanim którykolwiek z nich minie."
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "chunks": [
+        {
+          "sub": "Kalkulator obejmuje <b>każdą sytuację</b> przewidzianą w przepisach.",
+          "tts": "Kalkulator obejmuje każdą sytuację przewidzianą w przepisach."
+        },
+        {
+          "sub": "Przy bliźniętach urlop i kwoty przeliczają się natychmiast.",
+          "tts": "Przy bliźniętach urlop i kwoty przeliczają się natychmiast."
+        },
+        {
+          "sub": "Uwzględnia też zaświadczenie „Za życiem”, wcześniaka,",
+          "tts": "Uwzględnia też zaświadczenie Za życiem, wcześniaka,"
+        },
+        {
+          "sub": "adopcję, rodzinę zastępczą i pracę na część etatu.",
+          "tts": "adopcję, rodzinę zastępczą i pracę na część etatu."
+        },
+        {
+          "sub": "Każda kwota ma swoją <b>podstawę prawną</b>,",
+          "tts": "Każda kwota ma swoją podstawę prawną,"
+        },
+        {
+          "sub": "a zakładka ryzyk ostrzega, co może <b>odebrać lub obniżyć</b> zasiłek.",
+          "tts": "a zakładka ryzyk ostrzega, co może odebrać lub obniżyć zasiłek."
+        }
+      ]
+    },
+    {
+      "id": "s5a",
+      "chunks": [
+        {
+          "sub": "Możemy też wgrać dokumenty sprawy.",
+          "tts": "Możemy też wgrać dokumenty sprawy."
+        },
+        {
+          "sub": "<b>Sztuczna inteligencja</b> odczytuje zaświadczenie płatnika,",
+          "tts": "Sztuczna inteligencja odczytuje zaświadczenie płatnika,"
+        }
+      ]
+    },
+    {
+      "id": "s5b",
+      "chunks": [
+        {
+          "sub": "ale kwoty zawsze liczy przewidywalny <b>silnik reguł</b>.",
+          "tts": "ale kwoty zawsze liczy przewidywalny silnik reguł."
+        },
+        {
+          "sub": "Na przykładowych sprawach wynik jest <b>zgodny z decyzją ZUS</b>",
+          "tts": "Na przykładowych sprawach wynik jest zgodny z decyzją ZUS"
+        },
+        {
+          "sub": "w siedmiu przypadkach na siedem.",
+          "tts": "w siedmiu przypadkach na siedem."
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "chunks": [
+        {
+          "sub": "Wnioski o urlop wypełniają się <b>danymi z planu</b>.",
+          "tts": "Wnioski o urlop wypełniają się danymi z planu."
+        },
+        {
+          "sub": "Wystarczy uzupełnić brakujące pola i wysłać,",
+          "tts": "Wystarczy uzupełnić brakujące pola i wysłać,"
+        },
+        {
+          "sub": "a potwierdzenie odbioru przychodzi od razu.",
+          "tts": "a potwierdzenie odbioru przychodzi od razu."
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "chunks": [
+        {
+          "sub": "W jednym miejscu są też składki, zwolnienia lekarskie",
+          "tts": "W jednym miejscu są też składki, zwolnienia lekarskie"
+        },
+        {
+          "sub": "i odpis aktu urodzenia, na przykład <b>zaświadczenie o braku zaległości</b>.",
+          "tts": "i odpis aktu urodzenia, na przykład zaświadczenie o braku zaległości."
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "chunks": [
+        {
+          "sub": "Rodzicownik pomaga także w <b>najtrudniejszych chwilach</b>",
+          "tts": "Rodzicownik pomaga także w najtrudniejszych chwilach"
+        },
+        {
+          "sub": "i wskazuje organizacje, które wspierają rodziców.",
+          "tts": "i wskazuje organizacje, które wspierają rodziców."
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "chunks": [
+        {
+          "sub": "Kiedy zmienią się przepisy, administrator publikuje",
+          "tts": "Kiedy zmienią się przepisy, administrator publikuje"
+        },
+        {
+          "sub": "<b>nową wersję parametrów</b>, bez udziału programisty,",
+          "tts": "nową wersję parametrów, bez udziału programisty,"
+        },
+        {
+          "sub": "a każda zmiana jest od razu sprawdzana na sprawach testowych.",
+          "tts": "a każda zmiana jest od razu sprawdzana na sprawach testowych."
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "chunks": [
+        {
+          "sub": "",
+          "tts": "Rodzicownik. Urlopy i zasiłki z ZUS, policzone dla Ciebie."
+        }
+      ]
+    }
+  ]
+}
