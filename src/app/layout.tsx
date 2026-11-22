@@ -27,8 +27,13 @@ export const metadata: Metadata = {
     default: "Rodzicownik — świadczenia z ZUS",
     template: "%s · Rodzicownik",
   },
-  description:
-    "Sprawdź, jakie świadczenia z ZUS przysługują Ci w ciąży i po urodzeniu dziecka: ile, jak długo, gdzie złożyć wniosek i na co uważać.",
+  // Prototyp konkursowy na subdomenie — poza wyszukiwarkami (bez opisu, OG, mapy strony; noindex wszędzie)
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false, noimageindex: true },
+  },
 };
 
 export const viewport: Viewport = {

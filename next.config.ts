@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   devIndicators: false,
+  // Poza wyszukiwarkami: nagłówek obejmuje też API, pliki i obrazy (nie tylko strony HTML)
+  async headers() {
+    return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet, noimageindex" }] }];
+  },
 };
 
 export default nextConfig;

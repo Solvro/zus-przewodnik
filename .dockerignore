@@ -1,0 +1,19 @@
+# Sekrety i dane lokalne nie trafiają do obrazu
+.env*
+!.env.example
+node_modules
+.next
+.next-dev
+.git
+data/corpus
+data/features.json
+data/param-sets.json
+data/audit-log.json
+private-cases
+prezentacja
+docs
+tests
+test-results
+playwright-report
+coverage
+*.mp4
