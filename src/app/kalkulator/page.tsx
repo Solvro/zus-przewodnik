@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CalculatorView } from "@/components/calculator/calculator-view";
+import { ScenarioGate } from "@/components/layout/scenario-gate";
 
 export const metadata: Metadata = {
   title: "Kalkulator zasiłku macierzyńskiego",
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function KalkulatorPage() {
-  return <CalculatorView />;
+  return (
+    <ScenarioGate>
+      <CalculatorView />
+    </ScenarioGate>
+  );
 }

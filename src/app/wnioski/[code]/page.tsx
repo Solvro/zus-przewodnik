@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { findForm } from "@/content/forms";
 import { FormEditorView } from "./form-editor";
+import { ScenarioGate } from "@/components/layout/scenario-gate";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,9 @@ export default async function FormPage({ params }: { params: Promise<{ code: str
   if (!findForm(code)) notFound();
   return (
     <FeatureGate feature="applications">
-      <FormEditorView code={code} />
+      <ScenarioGate>
+        <FormEditorView code={code} />
+      </ScenarioGate>
     </FeatureGate>
   );
 }
